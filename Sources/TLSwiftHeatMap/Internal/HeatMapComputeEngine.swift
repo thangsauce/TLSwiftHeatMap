@@ -6,38 +6,38 @@ import UIKit
 /// returns a ready-to-draw `CGImage` back to the main actor.
 actor HeatMapComputeEngine {
 
-    // MARK: - Entry point
-
-    /// Compute a heat map image for the given points and visible region.
-    /// - Parameters:
-    ///   - points:      Consumer-supplied heat points.
-    ///   - type:        Render mode (blurry / distinct / flat).
-    ///   - colors:      Anchor colours for the gradient, cold → hot.
-    ///   - mapView:     Used to convert map coordinates → screen points. Must be called on main actor.
-    /// - Returns: A ready-to-display `CGImage`, or `nil` if points is empty.
     /// Number of interpolation steps between each colour anchor pair.
     private let colorDivideLevel = 2
 
+    // MARK: - Entry point
+
+    /// Compute a heat map image for the given points and overlay screen rect.
+    ///
+    /// - Parameters:
+    ///   - points:              Consumer-supplied heat points.
+    ///   - type:                Render mode (blurry / distinct / flat).
+    ///   - uiColors:            Anchor colours for the gradient, cold → hot.
+    ///   - overlayBoundingRect: The overlay's bounding rect in map-point space.
+    ///   - overlayCGRect:       The overlay's rect in UIView screen-point space.
+    /// - Returns: A ready-to-display `CGImage`, or `nil` if points is empty.
     func compute(
         points: [HeatPoint],
         type: HeatMapType,
         uiColors: [UIColor],
-        visibleMapRect: MKMapRect,
-        visibleMapRectCGSize: CGSize,
         overlayBoundingRect: MKMapRect,
         overlayCGRect: CGRect
     ) -> CGImage? {
         guard !points.isEmpty else { return nil }
 
-        let heatPoints = points.map { HeatMapPoint(from: $0) }
+        let heatPoints   = points.map { HeatMapPoint(from: $0) }
         let maxIntensity = heatPoints.map(\.heatLevel).max() ?? 1
 
-        // Build pixel-space data
+        // Convert each heat point to overlay-local screen-point coordinates.
         let pixelPoints: [PixelPoint] = heatPoints.map { hp in
             let globalPoint = mapPointToCGPoint(
                 hp.mapPoint,
-                overlayRect: overlayBoundingRect,
-                overlayCGRect: overlayCGRect
+                overlayRect:    overlayBoundingRect,
+                overlayCGRect:  overlayCGRect
             )
             let localPoint = CGPoint(
                 x: globalPoint.x - overlayCGRect.origin.x,
@@ -46,33 +46,23 @@ actor HeatMapComputeEngine {
             let radiusCG = radiusInCGPoints(
                 hp.radiusInMapPoints,
                 overlayBoundingRect: overlayBoundingRect,
-                overlayCGRect: overlayCGRect
+                overlayCGRect:       overlayCGRect
             )
             return PixelPoint(
-                heatLevel: Float(hp.heatLevel) / Float(maxIntensity),
+                heatLevel:  Float(hp.heatLevel) / Float(maxIntensity),
                 localPoint: localPoint,
-                radius: radiusCG
+                radius:     radiusCG
             )
         }
 
-        let scale = Double(visibleMapRectCGSize.width) / visibleMapRect.size.width
         let mixerMode: ColorMixerMode = (type == .radiusBlurry) ? .blurry : .distinct
         let mixer = ColorMixer(colors: uiColors, divideLevel: colorDivideLevel, mode: mixerMode)
 
-        let producer: RowDataProducer
-        if type == .flatDistinct {
-            producer = FlatRowDataProducer(
-                cgSize: overlayCGRect.size,
-                pixelPoints: pixelPoints,
-                scale: scale
-            )
-        } else {
-            producer = RadiusRowDataProducer(
-                cgSize: overlayCGRect.size,
-                pixelPoints: pixelPoints,
-                scale: scale
-            )
-        }
+        // cgSize is the overlay's size in screen points — RowDataProducer
+        // caps it to 512×512 and scales pixelPoints proportionally.
+        let producer: RowDataProducer = type == .flatDistinct
+            ? FlatRowDataProducer(cgSize: overlayCGRect.size, pixelPoints: pixelPoints)
+            : RadiusRowDataProducer(cgSize: overlayCGRect.size, pixelPoints: pixelPoints)
 
         producer.produce(mixer: mixer)
 
@@ -80,8 +70,10 @@ actor HeatMapComputeEngine {
     }
 
     // MARK: - Coordinate conversion helpers
+    //
     // These replicate the MKOverlayRenderer coordinate transforms without needing
-    // the renderer instance (which is @MainActor). We perform the maths manually.
+    // the renderer instance (which is @MainActor). All maths is done in map-point
+    // and screen-point space, which are both Sendable scalars.
 
     private func mapPointToCGPoint(
         _ mapPoint: MKMapPoint,
@@ -101,6 +93,7 @@ actor HeatMapComputeEngine {
         overlayBoundingRect: MKMapRect,
         overlayCGRect: CGRect
     ) -> CGFloat {
+        guard overlayBoundingRect.size.width > 0 else { return 0 }
         let ratio = radiusMapPoints / overlayBoundingRect.size.width
         return CGFloat(ratio) * overlayCGRect.size.width
     }

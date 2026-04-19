@@ -1,4 +1,4 @@
-# SwiftHeatMap
+# TLSwiftHeatMap
 
 A modern Swift Package for rendering heat map overlays on MapKit maps in SwiftUI. Built for **iOS 17+**, **Swift 6**, and **Swift Package Manager**.
 
@@ -15,14 +15,14 @@ A modern Swift Package for rendering heat map overlays on MapKit maps in SwiftUI
 
 ## Features
 
-- ✅ **SwiftUI native** — drop `HeatMapView` anywhere in your view hierarchy
-- ✅ **Swift 6 concurrency** — actor-isolated background computation, zero data races
-- ✅ **Swift Package Manager** — no CocoaPods, no Carthage
-- ✅ **iOS 17+** — built on modern MapKit APIs
-- ✅ **Three render modes** — radius blurry, radius distinct, flat distinct
-- ✅ **Customisable colours** — pass any gradient from cold to hot
-- ✅ **Performance cap** — bitmap capped at 512×512 to prevent on-device freezes
-- ✅ **Camera binding** — optional two-way `MapCameraPosition` binding
+- **SwiftUI native** — drop `HeatMapView` anywhere in your view hierarchy
+- **Swift 6 concurrency** — actor-isolated background computation, zero data races
+- **Swift Package Manager** — no CocoaPods, no Carthage
+- **iOS 17+** — built on modern MapKit APIs
+- **Three render modes** — radius blurry, radius distinct, flat distinct
+- **Customisable colours** — pass any gradient from cold to hot
+- **Performance cap** — bitmap capped at 512×512 to prevent on-device freezes
+- **Camera binding** — optional two-way `MapCameraPosition` binding
 
 ---
 
@@ -43,21 +43,21 @@ A modern Swift Package for rendering heat map overlays on MapKit maps in SwiftUI
 1. In Xcode, go to **File → Add Package Dependencies…**
 2. Enter the repository URL:
    ```
-   https://github.com/your-username/SwiftHeatMap
+   https://github.com/thangsauce/TLSwiftHeatMap
    ```
 3. Select **Up to Next Major Version** starting from `1.0.0`
-4. Add `SwiftHeatMap` to your target
+4. Add `TLSwiftHeatMap` to your target
 
 ### Swift Package Manager (Package.swift)
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/your-username/SwiftHeatMap", from: "1.0.0")
+    .package(url: "https://github.com/thangsauce/TLSwiftHeatMap", from: "1.0.0")
 ],
 targets: [
     .target(
         name: "YourApp",
-        dependencies: ["SwiftHeatMap"]
+        dependencies: ["TLSwiftHeatMap"]
     )
 ]
 ```
@@ -258,8 +258,8 @@ All data crossing the actor boundary (`[HeatPoint]`, `MKMapRect`, `CGImage`) is 
 | | JDSwiftHeatMap | SwiftHeatMap |
 |---|---|---|
 | Integration | CocoaPods only | Swift Package Manager |
-| SwiftUI | ❌ Requires UIKit wrapper | ✅ Native `View` |
-| Swift 6 | ❌ Data races throughout | ✅ Full actor isolation |
+| SwiftUI | ❌ Requires UIKit wrapper | Native `View` |
+| Swift 6 | ❌ Data races throughout | Full actor isolation |
 | API | Delegate protocol | Array of `HeatPoint` |
 | Bugs | 6 known bugs | Fixed |
 | Deprecated APIs | Several | None |

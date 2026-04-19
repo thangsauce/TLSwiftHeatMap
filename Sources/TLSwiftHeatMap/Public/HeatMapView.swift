@@ -61,7 +61,7 @@ public struct HeatMapView: UIViewRepresentable {
         private let engine = HeatMapComputeEngine()
         private var currentOverlay: HeatOverlay?
         private var currentRenderer: HeatOverlayRenderer?
-        /// Renderer pre-created for the next overlay, image set before `addOverlay` is called.
+        /// Renderer pre-created for the in-flight overlay, image set before `addOverlay`.
         private var pendingRenderer: HeatOverlayRenderer?
         private var isComputing = false
         private var pendingUpdate: (() -> Void)?
@@ -87,32 +87,31 @@ public struct HeatMapView: UIViewRepresentable {
             lastType   = type
             lastColors = colors
 
-            recompute(mapView: mapView, points: points, type: type, uiColors: uiColors)
+            recompute(points: points, type: type, uiColors: uiColors)
         }
 
-        private func recompute(
-            mapView: MKMapView,
-            points: [HeatPoint],
-            type: HeatMapType,
-            uiColors: [UIColor]
-        ) {
+        private func recompute(points: [HeatPoint], type: HeatMapType, uiColors: [UIColor]) {
             if isComputing {
+                // Capture `self` weakly; re-read `mapView` at call time to avoid
+                // holding a stale reference if SwiftUI has recycled the UIView.
                 pendingUpdate = { [weak self] in
-                    self?.recompute(mapView: mapView, points: points, type: type, uiColors: uiColors)
+                    self?.recompute(points: points, type: type, uiColors: uiColors)
                 }
                 return
             }
+            guard let mapView else { return }
             isComputing = true
 
             // Build the new overlay and pre-create its renderer.
             // The image is set on the renderer BEFORE the overlay is added to the map,
-            // avoiding a blank-flash during the first draw call.
-            let overlay = buildOverlay(from: points, type: type)
+            // eliminating the blank-flash that would occur if we added first and rendered later.
+            guard let overlay = buildOverlay(from: points, type: type) else {
+                isComputing = false
+                return
+            }
             let renderer = HeatOverlayRenderer(overlay: overlay)
             pendingRenderer = renderer
 
-            let visibleRect   = mapView.visibleMapRect
-            let visibleCGSize = mapView.bounds.size
             let boundingRect  = overlay.boundingMapRect
             let overlayCGRect = mapView.convert(
                 MKCoordinateRegion(boundingRect),
@@ -124,18 +123,22 @@ public struct HeatMapView: UIViewRepresentable {
                     points: points,
                     type: type,
                     uiColors: uiColors,
-                    visibleMapRect: visibleRect,
-                    visibleMapRectCGSize: visibleCGSize,
                     overlayBoundingRect: boundingRect,
                     overlayCGRect: overlayCGRect
                 )
 
-                // Set image on renderer before adding the overlay to the map.
+                // Apply image before adding overlay — no blank-flash on first draw.
                 if let image { renderer.renderedImage = image }
 
-                // Swap old overlay out, new one in — renderer already has its image.
-                if let old = currentOverlay { mapView.removeOverlay(old) }
-                mapView.addOverlay(overlay, level: .aboveLabels)
+                // Re-read mapView in case SwiftUI replaced it while computing.
+                guard let mv = self.mapView else {
+                    isComputing = false
+                    return
+                }
+
+                // Atomically swap old overlay for new one.
+                if let old = currentOverlay { mv.removeOverlay(old) }
+                mv.addOverlay(overlay, level: .aboveLabels)
                 currentOverlay  = overlay
                 currentRenderer = renderer
 
@@ -149,15 +152,16 @@ public struct HeatMapView: UIViewRepresentable {
 
         /// Builds a single overlay containing all points.
         ///
-        /// A single overlay (rather than multiple clustered ones) is correct here because
-        /// the 512×512 bitmap cap means there is no performance benefit to clustering,
-        /// and a single overlay guarantees no points are silently dropped across
-        /// geographically separated regions.
-        private func buildOverlay(from points: [HeatPoint], type: HeatMapType) -> HeatOverlay {
+        /// Returns `nil` if `points` is empty (caller must guard before calling).
+        /// A single overlay (rather than multiple clustered ones) ensures no points
+        /// are silently dropped for geographically separated data sets.
+        private func buildOverlay(from points: [HeatPoint], type: HeatMapType) -> HeatOverlay? {
             let heatPoints = points.map { HeatMapPoint(from: $0) }
+            guard let first = heatPoints.first else { return nil }
+
             let overlay: HeatOverlay = type == .flatDistinct
-                ? FlatHeatOverlay(first: heatPoints[0])
-                : RadiusHeatOverlay(first: heatPoints[0])
+                ? FlatHeatOverlay(first: first)
+                : RadiusHeatOverlay(first: first)
             heatPoints.dropFirst().forEach { overlay.insert($0) }
             return overlay
         }
@@ -168,22 +172,21 @@ public struct HeatMapView: UIViewRepresentable {
             guard let heatOverlay = overlay as? HeatOverlay else {
                 return MKOverlayRenderer(overlay: overlay)
             }
-            // Return the pre-created renderer if it matches, so its image is already set.
+            // Return the pre-created renderer so its image is already set.
             if let pending = pendingRenderer, pending.overlay === heatOverlay {
                 pendingRenderer = nil
                 currentRenderer = pending
                 return pending
             }
-            // Fallback (e.g. map view recreates overlays internally).
+            // Fallback: map view recreated the overlay internally.
             let renderer = HeatOverlayRenderer(overlay: heatOverlay)
             currentRenderer = renderer
             return renderer
         }
 
         public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-            guard !lastPoints.isEmpty, let mv = self.mapView else { return }
+            guard !lastPoints.isEmpty else { return }
             recompute(
-                mapView: mv,
                 points: lastPoints,
                 type: lastType ?? .radiusBlurry,
                 uiColors: lastColors.map { UIColor($0) }
@@ -195,7 +198,7 @@ public struct HeatMapView: UIViewRepresentable {
 // MARK: - Helpers
 
 private extension CGRect {
-    /// Returns `self` if valid, otherwise falls back to the view's bounds.
+    /// Returns `self` if the rect is valid, otherwise returns `fallback`.
     @MainActor
     func validated(fallback: CGRect) -> CGRect {
         (isNull || isInfinite || isEmpty) ? fallback : self

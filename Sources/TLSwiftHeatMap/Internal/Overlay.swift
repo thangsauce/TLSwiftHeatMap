@@ -5,13 +5,21 @@ import MapKit
 class HeatOverlay: NSObject, MKOverlay {
     var heatPoints: [HeatMapPoint] = []
 
+    /// Cached bounding rect — computed once on first access, invalidated by `insert`.
+    /// Safe to read from MapKit's rendering thread because overlays are never
+    /// mutated after `mapView.addOverlay` is called.
+    private var _cachedBoundingRect: MKMapRect?
+
     var coordinate: CLLocationCoordinate2D {
         let rect = boundingMapRect
         return MKMapPoint(x: rect.midX, y: rect.midY).coordinate
     }
 
     var boundingMapRect: MKMapRect {
-        computeBoundingRect()
+        if let cached = _cachedBoundingRect { return cached }
+        let rect = computeBoundingRect()
+        _cachedBoundingRect = rect
+        return rect
     }
 
     init(first point: HeatMapPoint) {
@@ -21,10 +29,10 @@ class HeatOverlay: NSObject, MKOverlay {
 
     func insert(_ point: HeatMapPoint) {
         heatPoints.append(point)
+        _cachedBoundingRect = nil // invalidate so the next read recomputes
     }
 
     /// Computes the smallest `MKMapRect` enclosing all heat points.
-    /// Both subclasses share this logic — overriding is not needed.
     func computeBoundingRect() -> MKMapRect {
         var minX = Double.greatestFiniteMagnitude
         var minY = Double.greatestFiniteMagnitude

@@ -23,28 +23,28 @@ class RowDataProducer {
     let bitmapSize: BitmapSize
     var rowData: [UInt8]
 
-    init(cgSize: CGSize, pixelPoints: [PixelPoint], scale: Double) {
-        let scaleFactor = CGFloat(scale) * 1.5
-        let rawW = cgSize.width  * scaleFactor
-        let rawH = cgSize.height * scaleFactor
-        // Cap to maxBitmapDimension
-        let capScale: CGFloat
-        if rawW > maxBitmapDimension || rawH > maxBitmapDimension {
-            capScale = maxBitmapDimension / max(rawW, rawH)
-        } else {
-            capScale = 1
-        }
-        let w = max(1, Int(rawW * capScale))
-        let h = max(1, Int(rawH * capScale))
-        bitmapSize = BitmapSize(width: w, height: h)
-        rowData = [UInt8](repeating: 0, count: w * h * 4)
+    /// - Parameters:
+    ///   - cgSize: The overlay's size in screen points (UIView coordinates).
+    ///             Already in the same space as `pixelPoints.localPoint` and `radius`.
+    ///   - pixelPoints: Heat point positions and radii in screen-point space.
+    init(cgSize: CGSize, pixelPoints: [PixelPoint]) {
+        // Cap the bitmap to maxBitmapDimension on its longest side,
+        // then scale pixelPoints proportionally so positions remain correct.
+        let largestDim = max(cgSize.width, cgSize.height)
+        let capScale: CGFloat = largestDim > maxBitmapDimension
+            ? maxBitmapDimension / largestDim
+            : 1.0
 
-        let finalScale = scaleFactor * capScale
+        let w = max(1, Int(cgSize.width  * capScale))
+        let h = max(1, Int(cgSize.height * capScale))
+        bitmapSize = BitmapSize(width: w, height: h)
+        rowData    = [UInt8](repeating: 0, count: w * h * 4)
+
         self.pixelPoints = pixelPoints.map { pp in
             PixelPoint(
-                heatLevel: pp.heatLevel,
-                localPoint: CGPoint(x: pp.localPoint.x * finalScale, y: pp.localPoint.y * finalScale),
-                radius: pp.radius * finalScale
+                heatLevel:  pp.heatLevel,
+                localPoint: CGPoint(x: pp.localPoint.x * capScale, y: pp.localPoint.y * capScale),
+                radius:     pp.radius * capScale
             )
         }
     }
@@ -67,8 +67,8 @@ final class RadiusRowDataProducer: RowDataProducer {
                 let px = CGFloat(x), py = CGFloat(y)
 
                 for pp in pixelPoints {
-                    let dx = Float(px - pp.localPoint.x)
-                    let dy = Float(py - pp.localPoint.y)
+                    let dx   = Float(px - pp.localPoint.x)
+                    let dy   = Float(py - pp.localPoint.y)
                     let dist = (dx * dx + dy * dy).squareRoot()
                     let ratio = 1 - dist / Float(pp.radius)
                     if ratio > 0 { density += ratio * pp.heatLevel }
@@ -100,18 +100,19 @@ final class FlatRowDataProducer: RowDataProducer {
                 let px = CGFloat(x), py = CGFloat(y)
 
                 for pp in pixelPoints {
-                    let dx = Float(px - pp.localPoint.x)
-                    let dy = Float(py - pp.localPoint.y)
+                    let dx   = Float(px - pp.localPoint.x)
+                    let dy   = Float(py - pp.localPoint.y)
                     let dist = (dx * dx + dy * dy).squareRoot()
                     let ratio = 1 - dist / Float(pp.radius)
                     if ratio > 0 { density += ratio * pp.heatLevel }
                 }
-                // Flat mode: zero density renders at minimum colour, not transparent
+                // Flat mode fills the entire bounding area — zero density shows minimum colour.
                 if density == 0 { density = 0.01 }
                 density = min(density, 1)
 
                 var rgb = mixer.color(forDensity: density)
-                // Flat mode: alpha encodes density
+                // Flat mode encodes density in alpha (overrides the mixer's opaque alpha)
+                // so that the filled area fades at its edges.
                 rgb.alpha = UInt8(min(density * 255, 255))
                 rowData[byteIndex]     = rgb.red
                 rowData[byteIndex + 1] = rgb.green

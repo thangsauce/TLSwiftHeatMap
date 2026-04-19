@@ -37,7 +37,10 @@ final class HeatOverlayRenderer: MKOverlayRenderer {
                 bitsPerComponent: 8,
                 bytesPerRow:      size.bytesPerRow,
                 space:            colorSpace,
-                bitmapInfo:       CGImageAlphaInfo.premultipliedLast.rawValue
+                // .last = straight (non-premultiplied) alpha.
+                // The pixel bytes from RowDataProducer are straight RGBA, so
+                // premultiplied (.premultipliedLast) would produce washed-out colours.
+                bitmapInfo:       CGImageAlphaInfo.last.rawValue
             ),
             let dst = ctx.data  // non-nil guaranteed when data: nil is passed
         else { return nil }

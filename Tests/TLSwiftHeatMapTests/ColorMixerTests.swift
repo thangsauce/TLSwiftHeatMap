@@ -1,5 +1,5 @@
 import XCTest
-@testable import SwiftHeatMap
+@testable import TLSwiftHeatMap
 
 final class ColorMixerTests: XCTestCase {
 

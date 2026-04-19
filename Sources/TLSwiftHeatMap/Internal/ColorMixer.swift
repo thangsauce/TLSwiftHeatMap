@@ -44,7 +44,9 @@ final class ColorMixer: Sendable {
             let greenStep = (rgb2.green - rgb1.green) / Float(divideLevel)
             let blueStep  = (rgb2.blue  - rgb1.blue)  / Float(divideLevel)
 
-            for step in 0...divideLevel {
+            // Exclusive upper bound avoids duplicating the shared boundary colour
+            // between adjacent segments (e.g. green would appear twice for [blue,green,red]).
+            for step in 0..<divideLevel {
                 let f = Float(step)
                 built.append(UIColor(
                     red:   CGFloat((rgb1.red   + redStep   * f) / 255),
@@ -54,6 +56,8 @@ final class ColorMixer: Sendable {
                 ))
             }
         }
+        // Append the final anchor exactly once.
+        if let last = colors.last { built.append(last) }
         colorArray = built
     }
 
@@ -85,7 +89,7 @@ final class ColorMixer: Sendable {
         let count = colorArray.count
         guard count >= 2 else { return .transparent }
 
-        // Clamp to [0, 1) to avoid out-of-bounds at density == 1.0
+        // Clamp to [0, 1) to avoid out-of-bounds at density == 1.0.
         let d = min(density, Float(1) - Float.ulpOfOne)
         let binWidth = Float(1) / Float(count - 1)
         let rawIndex = d / binWidth

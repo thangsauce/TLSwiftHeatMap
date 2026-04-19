@@ -3,28 +3,28 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftHeatMap",
+    name: "TLSwiftHeatMap",
     platforms: [
         .iOS(.v17)
     ],
     products: [
         .library(
-            name: "SwiftHeatMap",
-            targets: ["SwiftHeatMap"]
+            name: "TLSwiftHeatMap",
+            targets: ["TLSwiftHeatMap"]
         )
     ],
     targets: [
         .target(
-            name: "SwiftHeatMap",
-            path: "Sources/SwiftHeatMap",
+            name: "TLSwiftHeatMap",
+            path: "Sources/TLSwiftHeatMap",
             swiftSettings: [
                 .swiftLanguageMode(.v6)
             ]
         ),
         .testTarget(
-            name: "SwiftHeatMapTests",
-            dependencies: ["SwiftHeatMap"],
-            path: "Tests/SwiftHeatMapTests"
+            name: "TLSwiftHeatMapTests",
+            dependencies: ["TLSwiftHeatMap"],
+            path: "Tests/TLSwiftHeatMapTests"
         )
     ]
 )
