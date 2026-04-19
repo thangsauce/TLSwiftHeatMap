@@ -1,5 +1,4 @@
 import MapKit
-import UIKit
 
 /// Renders a pre-computed `CGImage` onto the map tile context.
 final class HeatOverlayRenderer: MKOverlayRenderer {

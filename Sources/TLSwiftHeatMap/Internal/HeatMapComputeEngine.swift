@@ -1,5 +1,4 @@
 import MapKit
-import UIKit
 
 /// All background heat map computation runs inside this actor.
 /// Receives only `Sendable` value types across the boundary;
@@ -23,7 +22,7 @@ actor HeatMapComputeEngine {
     func compute(
         points: [HeatPoint],
         type: HeatMapType,
-        uiColors: [UIColor],
+        uiColors: [PlatformColor],
         overlayBoundingRect: MKMapRect,
         overlayCGRect: CGRect
     ) -> CGImage? {

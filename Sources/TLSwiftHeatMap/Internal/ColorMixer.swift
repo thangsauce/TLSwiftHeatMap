@@ -1,4 +1,4 @@
-import UIKit
+import CoreGraphics
 
 enum ColorMixerMode {
     case blurry
@@ -17,14 +17,14 @@ struct BytesRGB {
 /// All state is set at `init` time and is read-only thereafter, making this safe to
 /// pass across actor boundaries without `@unchecked Sendable`.
 final class ColorMixer: Sendable {
-    private let colorArray: [UIColor]
+    private let colorArray: [PlatformColor]
     let mode: ColorMixerMode
 
     /// - Parameters:
     ///   - colors: Anchor colours from cold to hot (minimum 2).
     ///   - divideLevel: Number of interpolation steps between each anchor pair (minimum 1).
     ///   - mode: Blurry (linear interpolation) or distinct (nearest-bin).
-    init(colors: [UIColor], divideLevel: Int, mode: ColorMixerMode) {
+    init(colors: [PlatformColor], divideLevel: Int, mode: ColorMixerMode) {
         precondition(divideLevel > 0, "divideLevel must be > 0")
         self.mode = mode
 
@@ -33,7 +33,7 @@ final class ColorMixer: Sendable {
             return
         }
 
-        var built: [UIColor] = []
+        var built: [PlatformColor] = []
         for index in 0..<(colors.count - 1) {
             guard
                 let rgb1 = colors[index].rgbComponents(),
@@ -48,7 +48,7 @@ final class ColorMixer: Sendable {
             // between adjacent segments (e.g. green would appear twice for [blue,green,red]).
             for step in 0..<divideLevel {
                 let f = Float(step)
-                built.append(UIColor(
+                built.append(PlatformColor(
                     red:   CGFloat((rgb1.red   + redStep   * f) / 255),
                     green: CGFloat((rgb1.green + greenStep * f) / 255),
                     blue:  CGFloat((rgb1.blue  + blueStep  * f) / 255),
@@ -121,10 +121,17 @@ private extension BytesRGB {
     static let transparent = BytesRGB(red: 0, green: 0, blue: 0, alpha: 0)
 }
 
-private extension UIColor {
+private extension PlatformColor {
     func rgbComponents() -> (red: Float, green: Float, blue: Float)? {
+#if canImport(AppKit) && !canImport(UIKit)
+        let converted = usingColorSpace(.deviceRGB) ?? self
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        converted.getRed(&r, green: &g, blue: &b, alpha: &a)
+        return (Float(r * 255), Float(g * 255), Float(b * 255))
+#else
         var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         guard getRed(&r, green: &g, blue: &b, alpha: &a) else { return nil }
         return (Float(r * 255), Float(g * 255), Float(b * 255))
+#endif
     }
 }

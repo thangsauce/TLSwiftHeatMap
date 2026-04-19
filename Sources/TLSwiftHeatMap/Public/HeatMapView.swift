@@ -1,6 +1,8 @@
+#if canImport(UIKit)
 import SwiftUI
 import MapKit
 import UIKit
+import CoreGraphics
 
 /// A SwiftUI view that renders a heat map overlay on top of a `MKMapView`.
 ///
@@ -204,3 +206,4 @@ private extension CGRect {
         (isNull || isInfinite || isEmpty) ? fallback : self
     }
 }
+#endif
