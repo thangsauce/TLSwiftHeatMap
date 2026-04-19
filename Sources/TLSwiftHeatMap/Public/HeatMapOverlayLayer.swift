@@ -97,9 +97,29 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
                 return rect
             }
             if let region = camera.region {
-                return MKMapRect(region)
+                return mapRect(from: region)
             }
             return nil
+        }
+
+        private func mapRect(from region: MKCoordinateRegion) -> MKMapRect {
+            let latDelta = region.span.latitudeDelta / 2
+            let lonDelta = region.span.longitudeDelta / 2
+
+            let north = region.center.latitude + latDelta
+            let south = region.center.latitude - latDelta
+            let west = region.center.longitude - lonDelta
+            let east = region.center.longitude + lonDelta
+
+            let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude: north, longitude: west))
+            let bottomRight = MKMapPoint(CLLocationCoordinate2D(latitude: south, longitude: east))
+
+            let x = min(topLeft.x, bottomRight.x)
+            let y = min(topLeft.y, bottomRight.y)
+            let width = abs(bottomRight.x - topLeft.x)
+            let height = abs(bottomRight.y - topLeft.y)
+
+            return MKMapRect(x: x, y: y, width: width, height: height)
         }
     }
 }
