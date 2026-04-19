@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/primary.swiftdeps"
+  },
+  "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.derived/runner.swift": {
+    "dependencies": "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner.d",
+    "object": "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner.swiftdeps",
+    "diagnostics": "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner.dia"
+  }
+}

@@ -1,0 +1,754 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.xctest/Contents/MacOS/SwiftHeatMapPackageTests",
+      "packagePath" : "/Users/thangle/Private Projects/SwiftHeatMap",
+      "productName" : "SwiftHeatMapPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.SwiftHeatMap-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/sources",
+      "importPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/ColorMixer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapComputeEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapPoint.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/Overlay.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/OverlayRenderer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/RowDataProducer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatPoint.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "SwiftHeatMap",
+      "moduleOutputPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMap.swiftmodule",
+      "objects" : [
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/ColorMixer.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapComputeEngine.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapPoint.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/Overlay.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/OverlayRenderer.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/RowDataProducer.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapType.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapView.swift.o",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatPoint.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/include/SwiftHeatMap-Swift.h",
+        "-swift-version",
+        "6",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "swiftheatmap"
+      ],
+      "outputFileMapPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/ColorMixer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapComputeEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapPoint.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/Overlay.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/OverlayRenderer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/RowDataProducer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatPoint.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMap.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/ColorMixer.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapComputeEngine.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapPoint.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/Overlay.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/OverlayRenderer.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/RowDataProducer.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapType.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapView.swift",
+        "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatPoint.swift"
+      ],
+      "tempsPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.SwiftHeatMapPackageTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/sources",
+      "importPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMapTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "SwiftHeatMapPackageTests",
+      "moduleOutputPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMapPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/include/SwiftHeatMapPackageTests-Swift.h",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "swiftheatmap"
+      ],
+      "outputFileMapPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMapPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.SwiftHeatMapTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/sources",
+      "importPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Tests/SwiftHeatMapTests/ColorMixerTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMap.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "SwiftHeatMapTests",
+      "moduleOutputPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMapTests.swiftmodule",
+      "objects" : [
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/ColorMixerTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "6",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "swiftheatmap"
+      ],
+      "outputFileMapPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/ColorMixerTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules/SwiftHeatMapTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/thangle/Private Projects/SwiftHeatMap/Tests/SwiftHeatMapTests/ColorMixerTests.swift"
+      ],
+      "tempsPath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "SwiftHeatMap" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "SwiftHeatMap",
+      "-package-name",
+      "swiftheatmap",
+      "-c",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/ColorMixer.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapComputeEngine.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapPoint.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/Overlay.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/OverlayRenderer.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/RowDataProducer.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapType.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapView.swift",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatPoint.swift",
+      "-I",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx10.13",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/include/SwiftHeatMap-Swift.h",
+      "-swift-version",
+      "6",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "swiftheatmap",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "SwiftHeatMapPackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "SwiftHeatMapPackageTests",
+      "-package-name",
+      "swiftheatmap",
+      "-c",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx10.13",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/include/SwiftHeatMapPackageTests-Swift.h",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "swiftheatmap",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "SwiftHeatMapTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "SwiftHeatMapTests",
+      "-package-name",
+      "swiftheatmap",
+      "-c",
+      "/Users/thangle/Private Projects/SwiftHeatMap/Tests/SwiftHeatMapTests/ColorMixerTests.swift",
+      "-I",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "6",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "swiftheatmap",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "SwiftHeatMap" : [
+
+    ],
+    "SwiftHeatMapPackageTests" : [
+      "SwiftHeatMapTests",
+      "SwiftHeatMap"
+    ],
+    "SwiftHeatMapTests" : [
+      "SwiftHeatMap"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/ColorMixer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapComputeEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/HeatMapPoint.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/Overlay.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/OverlayRenderer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Internal/RowDataProducer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatMapView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Sources/SwiftHeatMap/Public/HeatPoint.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/sources"
+    },
+    "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/sources"
+    },
+    "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/ColorMixer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapComputeEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapPoint.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatMapView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/HeatPoint.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/Overlay.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/OverlayRenderer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMap.build/RowDataProducer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/ColorMixerTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/thangle/Private Projects/SwiftHeatMap/Tests/SwiftHeatMapTests/ColorMixerTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/SwiftHeatMapTests.build/sources"
+    },
+    "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/thangle/Private Projects/SwiftHeatMap/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}
