@@ -93,14 +93,13 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
         }
 
         private func mapRect(from camera: MapCameraPosition) -> MKMapRect? {
-            switch camera {
-            case .rect(let rect):
+            if let rect = camera.rect {
                 return rect
-            case .region(let region):
-                return MKMapRect(region)
-            default:
-                return nil
             }
+            if let region = camera.region {
+                return MKMapRect(region)
+            }
+            return nil
         }
     }
 }
