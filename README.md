@@ -255,7 +255,7 @@ All data crossing the actor boundary (`[HeatPoint]`, `MKMapRect`, `CGImage`) is 
 
 ## Differences from JDSwiftHeatMap
 
-| | JDSwiftHeatMap | SwiftHeatMap |
+| | JDSwiftHeatMap | TLSwiftHeatMap |
 |---|---|---|
 | Integration | CocoaPods only | Swift Package Manager |
 | SwiftUI | ❌ Requires UIKit wrapper | Native `View` |
@@ -271,4 +271,4 @@ All data crossing the actor boundary (`[HeatPoint]`, `MKMapRect`, `CGImage`) is 
 
 MIT. See [LICENSE](LICENSE) for details.
 
-Original work © 2017 JamesDouble. Modernised implementation © 2026.
+Original work © 2017 JamesDouble. Modernised implementation © 2026 Thang Le.
