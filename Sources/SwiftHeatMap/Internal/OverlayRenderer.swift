@@ -3,7 +3,7 @@ import UIKit
 
 /// Renders a pre-computed `CGImage` onto the map tile context.
 final class HeatOverlayRenderer: MKOverlayRenderer {
-    /// Set by `HeatMapComputeEngine` after bitmap computation finishes.
+    /// Set before the overlay is added to the map to avoid a blank-flash on first draw.
     var renderedImage: CGImage?
 
     init(overlay: HeatOverlay) {
@@ -23,14 +23,14 @@ final class HeatOverlayRenderer: MKOverlayRenderer {
 
     // MARK: - Pixel data → CGImage
 
-    /// Converts raw RGBA byte array into a `CGImage`.
+    /// Converts a raw RGBA byte array into a `CGImage`.
+    ///
+    /// Creates a `CGContext` with its own backing store (`data: nil`), copies the pixel
+    /// bytes into it via `withUnsafeBytes`, then snapshots the context.
     static func makeImage(rowData: [UInt8], size: BitmapSize) -> CGImage? {
-        let renderer = UIGraphicsImageRenderer(
-            size: CGSize(width: size.width, height: size.height)
-        )
         guard
             let colorSpace = CGColorSpace(name: CGColorSpace.sRGB),
-            let bitmapContext = CGContext(
+            let ctx = CGContext(
                 data: nil,
                 width:            size.width,
                 height:           size.height,
@@ -38,15 +38,15 @@ final class HeatOverlayRenderer: MKOverlayRenderer {
                 bytesPerRow:      size.bytesPerRow,
                 space:            colorSpace,
                 bitmapInfo:       CGImageAlphaInfo.premultipliedLast.rawValue
-            )
+            ),
+            let dst = ctx.data  // non-nil guaranteed when data: nil is passed
         else { return nil }
 
-        rowData.withUnsafeBytes { ptr in
-            guard let base = ptr.baseAddress else { return }
-            bitmapContext.data?.copyMemory(from: base, byteCount: rowData.count)
+        rowData.withUnsafeBytes { src in
+            guard let base = src.baseAddress else { return }
+            dst.copyMemory(from: base, byteCount: rowData.count)
         }
 
-        _ = renderer // silence unused warning — UIGraphicsImageRenderer used for sRGB context only
-        return bitmapContext.makeImage()
+        return ctx.makeImage()
     }
 }

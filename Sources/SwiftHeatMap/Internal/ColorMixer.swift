@@ -13,20 +13,20 @@ struct BytesRGB {
 }
 
 /// Precomputes an interpolated colour ramp and maps a density value [0,1] to RGBA bytes.
-final class ColorMixer: @unchecked Sendable {
+///
+/// All state is set at `init` time and is read-only thereafter, making this safe to
+/// pass across actor boundaries without `@unchecked Sendable`.
+final class ColorMixer: Sendable {
     private let colorArray: [UIColor]
-    var mode: ColorMixerMode
+    let mode: ColorMixerMode
 
     /// - Parameters:
-    ///   - colors: Anchor colours from cold to hot.
-    ///   - divideLevel: Number of interpolation steps between each anchor pair.
+    ///   - colors: Anchor colours from cold to hot (minimum 2).
+    ///   - divideLevel: Number of interpolation steps between each anchor pair (minimum 1).
     ///   - mode: Blurry (linear interpolation) or distinct (nearest-bin).
     init(colors: [UIColor], divideLevel: Int, mode: ColorMixerMode) {
+        precondition(divideLevel > 0, "divideLevel must be > 0")
         self.mode = mode
-
-        guard divideLevel > 0 else {
-            fatalError("divideLevel must be > 0")
-        }
 
         guard colors.count >= 2 else {
             colorArray = colors
@@ -76,12 +76,7 @@ final class ColorMixer: @unchecked Sendable {
         let index = min(Int(density / binWidth), count - 1)
         guard let rgb = colorArray[index].rgbComponents() else { return .transparent }
 
-        return BytesRGB(
-            red:   UInt8(rgb.red),
-            green: UInt8(rgb.green),
-            blue:  UInt8(rgb.blue),
-            alpha: 255
-        )
+        return BytesRGB(red: UInt8(rgb.red), green: UInt8(rgb.green), blue: UInt8(rgb.blue), alpha: 255)
     }
 
     private func blurry(density: Float) -> BytesRGB {

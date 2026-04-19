@@ -23,15 +23,9 @@ class HeatOverlay: NSObject, MKOverlay {
         heatPoints.append(point)
     }
 
+    /// Computes the smallest `MKMapRect` enclosing all heat points.
+    /// Both subclasses share this logic — overriding is not needed.
     func computeBoundingRect() -> MKMapRect {
-        fatalError("Subclass must implement computeBoundingRect()")
-    }
-}
-
-// MARK: - Radius overlay
-
-final class RadiusHeatOverlay: HeatOverlay {
-    override func computeBoundingRect() -> MKMapRect {
         var minX = Double.greatestFiniteMagnitude
         var minY = Double.greatestFiniteMagnitude
         var maxX = -Double.greatestFiniteMagnitude
@@ -54,28 +48,10 @@ final class RadiusHeatOverlay: HeatOverlay {
     }
 }
 
-// MARK: - Flat overlay
+// MARK: - Subclasses
 
-final class FlatHeatOverlay: HeatOverlay {
-    override func computeBoundingRect() -> MKMapRect {
-        var minX = Double.greatestFiniteMagnitude
-        var minY = Double.greatestFiniteMagnitude
-        var maxX = -Double.greatestFiniteMagnitude
-        var maxY = -Double.greatestFiniteMagnitude
+/// Radius-based overlay: each point's heat spreads outward by `radiusInKm`.
+final class RadiusHeatOverlay: HeatOverlay {}
 
-        for point in heatPoints {
-            let rect = point.mapRect
-            minX = min(minX, rect.minX)
-            minY = min(minY, rect.minY)
-            maxX = max(maxX, rect.maxX)
-            maxY = max(maxY, rect.maxY)
-        }
-
-        guard maxX >= minX else { return .null }
-
-        return MKMapRect(
-            origin: MKMapPoint(x: minX, y: minY),
-            size: MKMapSize(width: maxX - minX, height: maxY - minY)
-        )
-    }
-}
+/// Flat overlay: fills the entire bounding area with density-based colour.
+final class FlatHeatOverlay: HeatOverlay {}

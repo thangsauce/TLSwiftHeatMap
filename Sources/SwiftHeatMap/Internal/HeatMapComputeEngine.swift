@@ -15,10 +15,13 @@ actor HeatMapComputeEngine {
     ///   - colors:      Anchor colours for the gradient, cold → hot.
     ///   - mapView:     Used to convert map coordinates → screen points. Must be called on main actor.
     /// - Returns: A ready-to-display `CGImage`, or `nil` if points is empty.
+    /// Number of interpolation steps between each colour anchor pair.
+    private let colorDivideLevel = 2
+
     func compute(
         points: [HeatPoint],
         type: HeatMapType,
-        colors: [UIColor],
+        uiColors: [UIColor],
         visibleMapRect: MKMapRect,
         visibleMapRectCGSize: CGSize,
         overlayBoundingRect: MKMapRect,
@@ -54,7 +57,7 @@ actor HeatMapComputeEngine {
 
         let scale = Double(visibleMapRectCGSize.width) / visibleMapRect.size.width
         let mixerMode: ColorMixerMode = (type == .radiusBlurry) ? .blurry : .distinct
-        let mixer = ColorMixer(colors: colors, divideLevel: 2, mode: mixerMode)
+        let mixer = ColorMixer(colors: uiColors, divideLevel: colorDivideLevel, mode: mixerMode)
 
         let producer: RowDataProducer
         if type == .flatDistinct {

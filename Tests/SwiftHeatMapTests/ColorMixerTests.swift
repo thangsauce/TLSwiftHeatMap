@@ -56,11 +56,13 @@ final class ColorMixerTests: XCTestCase {
         _ = rgb
     }
 
-    func test_divideLevelOne_usesAnchorColorsDirectly() {
-        let mixer = ColorMixer(colors: [.blue, .red], divideLevel: 1, mode: .distinct)
+    func test_differentDensities_mapToDifferentColors() {
+        // divideLevel:2 with [.blue, .red] produces 3 colours: blue, purple, red.
+        // binWidth = 1/(3-1) = 0.5, so density 0.1 → bin 0 (blue, red=0)
+        // and density 0.9 → bin 1 (purple, red≈127). They must differ.
+        let mixer = ColorMixer(colors: [.blue, .red], divideLevel: 2, mode: .distinct)
         let low  = mixer.color(forDensity: 0.1)
         let high = mixer.color(forDensity: 0.9)
-        // Different densities should map to different colours
-        XCTAssertNotEqual(low.red, high.red)
+        XCTAssertNotEqual(low.red, high.red, "Low and high density should produce different red components")
     }
 }

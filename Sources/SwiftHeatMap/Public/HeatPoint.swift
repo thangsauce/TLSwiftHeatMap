@@ -19,3 +19,12 @@ public struct HeatPoint: Sendable {
         self.radiusInKm = radiusInKm
     }
 }
+
+extension HeatPoint: Equatable {
+    public static func == (lhs: HeatPoint, rhs: HeatPoint) -> Bool {
+        lhs.coordinate.latitude  == rhs.coordinate.latitude  &&
+        lhs.coordinate.longitude == rhs.coordinate.longitude &&
+        lhs.intensity            == rhs.intensity            &&
+        lhs.radiusInKm           == rhs.radiusInKm
+    }
+}
