@@ -12,17 +12,20 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
     private let type: HeatMapType
     private let colors: [Color]
     @Binding private var camera: MapCameraPosition
+    @Binding private var visibleMapRect: MKMapRect?
 
     public init(
         points: [HeatPoint],
         type: HeatMapType = .radiusBlurry,
         colors: [Color] = [.blue, .green, .red],
-        camera: Binding<MapCameraPosition>
+        camera: Binding<MapCameraPosition>,
+        visibleMapRect: Binding<MKMapRect?> = .constant(nil)
     ) {
         self.points = points
         self.type = type
         self.colors = colors
         _camera = camera
+        _visibleMapRect = visibleMapRect
     }
 
     public func makeCoordinator() -> Coordinator {
@@ -45,7 +48,8 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
             points: points,
             type: type,
             uiColors: colors.map { UIColor($0) },
-            camera: camera
+            camera: camera,
+            visibleMapRect: visibleMapRect
         )
     }
 
@@ -63,7 +67,8 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
             points: [HeatPoint],
             type: HeatMapType,
             uiColors: [UIColor],
-            camera: MapCameraPosition
+            camera: MapCameraPosition,
+            visibleMapRect: MKMapRect?
         ) {
             renderTask?.cancel()
 
@@ -71,7 +76,11 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
                 !points.isEmpty,
                 imageView.bounds.width > 0,
                 imageView.bounds.height > 0,
-                let visibleMapRect = mapRect(from: camera)
+                let effectiveMapRect = mapRect(
+                    from: visibleMapRect,
+                    camera: camera,
+                    points: points
+                )
             else {
                 imageView.image = nil
                 return
@@ -84,7 +93,7 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
                     points: points,
                     type: type,
                     uiColors: uiColors,
-                    overlayBoundingRect: visibleMapRect,
+                    overlayBoundingRect: effectiveMapRect,
                     overlayCGRect: overlayRect
                 )
                 guard !Task.isCancelled else { return }
@@ -92,14 +101,21 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
             }
         }
 
-        private func mapRect(from camera: MapCameraPosition) -> MKMapRect? {
-            if let rect = camera.rect {
+        private func mapRect(
+            from visibleMapRect: MKMapRect?,
+            camera: MapCameraPosition,
+            points: [HeatPoint]
+        ) -> MKMapRect? {
+            if let rect = visibleMapRect, rect.size.width > 0, rect.size.height > 0 {
+                return rect
+            }
+            if let rect = camera.rect, rect.size.width > 0, rect.size.height > 0 {
                 return rect
             }
             if let region = camera.region {
                 return mapRect(from: region)
             }
-            return nil
+            return pointBoundsRect(from: points)
         }
 
         private func mapRect(from region: MKCoordinateRegion) -> MKMapRect {
@@ -119,7 +135,40 @@ public struct HeatMapOverlayLayer: UIViewRepresentable {
             let width = abs(bottomRight.x - topLeft.x)
             let height = abs(bottomRight.y - topLeft.y)
 
-            return MKMapRect(x: x, y: y, width: width, height: height)
+            // Crossing the International Date Line can produce a very large x-span
+            // with this simple corner-based conversion. In that case, use a world-width
+            // rect for correctness.
+            if width > MKMapSize.world.width / 2 {
+                return MKMapRect(
+                    x: 0,
+                    y: y,
+                    width: MKMapSize.world.width,
+                    height: max(height, 1)
+                )
+            }
+
+            return MKMapRect(x: x, y: y, width: max(width, 1), height: max(height, 1))
+        }
+
+        private func pointBoundsRect(from points: [HeatPoint]) -> MKMapRect? {
+            let mapPoints = points.map { HeatMapPoint(from: $0).mapPoint }
+            guard let first = mapPoints.first else { return nil }
+
+            var minX = first.x
+            var minY = first.y
+            var maxX = first.x
+            var maxY = first.y
+
+            for point in mapPoints.dropFirst() {
+                minX = min(minX, point.x)
+                minY = min(minY, point.y)
+                maxX = max(maxX, point.x)
+                maxY = max(maxY, point.y)
+            }
+
+            let width = max(maxX - minX, 1)
+            let height = max(maxY - minY, 1)
+            return MKMapRect(x: minX, y: minY, width: width, height: height)
         }
     }
 }

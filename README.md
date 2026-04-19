@@ -251,6 +251,34 @@ struct ContentView: View {
 }
 ```
 
+For best compatibility across all camera modes (including `.automatic`), feed `visibleMapRect`
+from `onMapCameraChange`:
+
+```swift
+struct ContentView: View {
+    @State private var camera: MapCameraPosition = .automatic
+    @State private var visibleMapRect: MKMapRect?
+    let points: [HeatPoint] = ...
+
+    var body: some View {
+        ZStack {
+            Map(position: $camera)
+                .onMapCameraChange(frequency: .continuous) { context in
+                    visibleMapRect = context.rect
+                }
+
+            HeatMapOverlayLayer(
+                points: points,
+                type: .radiusBlurry,
+                camera: $camera,
+                visibleMapRect: $visibleMapRect
+            )
+            .allowsHitTesting(false)
+        }
+    }
+}
+```
+
 ### Responding to data changes
 
 `HeatMapView` re-renders automatically whenever `points` changes — just update your array:
