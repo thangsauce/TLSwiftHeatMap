@@ -135,6 +135,24 @@ public enum HeatMapType: Sendable {
 
 ---
 
+### `HeatMapOverlayLevel`
+
+Controls where the heatmap is composited in MapKit's overlay stack.
+
+```swift
+public enum HeatMapOverlayLevel: Sendable {
+    case aboveRoads   // directly on top of map tiles, below labels
+    case aboveLabels  // on top of labels/annotations
+}
+```
+
+| Level | Description | Best for |
+|---|---|---|
+| `.aboveRoads` | Renders heatmap directly on the map layer | Keeping street/place labels readable |
+| `.aboveLabels` | Renders heatmap above labels and overlays | Maximum heatmap visibility |
+
+---
+
 ### `HeatMapView`
 
 The SwiftUI view. Drop it anywhere — it manages its own `MKMapView` internally.
@@ -144,6 +162,7 @@ public struct HeatMapView: View {
     public init(
         points: [HeatPoint],
         type: HeatMapType = .radiusBlurry,
+        overlayLevel: HeatMapOverlayLevel = .aboveLabels,
         colors: [Color] = [.blue, .green, .red],
         camera: Binding<MapCameraPosition> = .constant(.automatic)
     )
@@ -154,6 +173,7 @@ public struct HeatMapView: View {
 |---|---|---|---|
 | `points` | `[HeatPoint]` | — | Heat data to render |
 | `type` | `HeatMapType` | `.radiusBlurry` | Render mode |
+| `overlayLevel` | `HeatMapOverlayLevel` | `.aboveLabels` | Where to layer the heatmap in MapKit |
 | `colors` | `[Color]` | `[.blue, .green, .red]` | Gradient anchors, cold → hot |
 | `camera` | `Binding<MapCameraPosition>` | `.constant(.automatic)` | Optional camera control |
 
@@ -177,6 +197,16 @@ HeatMapView(
 HeatMapView(points: points, type: .radiusDistinct)
 ```
 
+### Layer heatmap directly on the map
+
+```swift
+HeatMapView(
+    points: points,
+    type: .radiusBlurry,
+    overlayLevel: .aboveRoads
+)
+```
+
 ### Camera binding
 
 ```swift
@@ -190,6 +220,33 @@ struct ContentView: View {
 
     var body: some View {
         HeatMapView(points: points, camera: $camera)
+    }
+}
+```
+
+### Overlay on your existing SwiftUI `Map`
+
+```swift
+struct ContentView: View {
+    @State private var camera: MapCameraPosition = .region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: 37.77, longitude: -122.42),
+            span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        )
+    )
+
+    let points: [HeatPoint] = ...
+
+    var body: some View {
+        ZStack {
+            Map(position: $camera)
+            HeatMapOverlayLayer(
+                points: points,
+                type: .radiusBlurry,
+                camera: $camera
+            )
+            .allowsHitTesting(false)
+        }
     }
 }
 ```

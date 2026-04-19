@@ -14,6 +14,7 @@ import CoreGraphics
 public struct HeatMapView: UIViewRepresentable {
     private let points: [HeatPoint]
     private let type: HeatMapType
+    private let overlayLevel: HeatMapOverlayLevel
     private let colors: [Color]
     @Binding private var camera: MapCameraPosition
 
@@ -22,13 +23,15 @@ public struct HeatMapView: UIViewRepresentable {
     public init(
         points: [HeatPoint],
         type: HeatMapType = .radiusBlurry,
+        overlayLevel: HeatMapOverlayLevel = .aboveLabels,
         colors: [Color] = [.blue, .green, .red],
         camera: Binding<MapCameraPosition> = .constant(.automatic)
     ) {
-        self.points = points
-        self.type   = type
-        self.colors = colors
-        _camera     = camera
+        self.points       = points
+        self.type         = type
+        self.overlayLevel = overlayLevel
+        self.colors       = colors
+        _camera           = camera
     }
 
     // MARK: - UIViewRepresentable
@@ -49,6 +52,7 @@ public struct HeatMapView: UIViewRepresentable {
             mapView: mapView,
             points: points,
             type: type,
+            overlayLevel: overlayLevel,
             colors: colors,
             uiColors: colors.map { UIColor($0) }
         )
@@ -71,33 +75,49 @@ public struct HeatMapView: UIViewRepresentable {
         // Change-detection state
         private var lastPoints: [HeatPoint] = []
         private var lastType: HeatMapType?
+        private var lastOverlayLevel: HeatMapOverlayLevel?
         private var lastColors: [Color] = []
 
         func update(
             mapView: MKMapView,
             points: [HeatPoint],
             type: HeatMapType,
+            overlayLevel: HeatMapOverlayLevel,
             colors: [Color],
             uiColors: [UIColor]
         ) {
             guard
                 !points.isEmpty,
-                points != lastPoints || type != lastType || colors != lastColors
+                points != lastPoints ||
+                type != lastType ||
+                overlayLevel != lastOverlayLevel ||
+                colors != lastColors
             else { return }
 
-            lastPoints = points
-            lastType   = type
-            lastColors = colors
+            lastPoints       = points
+            lastType         = type
+            lastOverlayLevel = overlayLevel
+            lastColors       = colors
 
-            recompute(points: points, type: type, uiColors: uiColors)
+            recompute(points: points, type: type, overlayLevel: overlayLevel, uiColors: uiColors)
         }
 
-        private func recompute(points: [HeatPoint], type: HeatMapType, uiColors: [UIColor]) {
+        private func recompute(
+            points: [HeatPoint],
+            type: HeatMapType,
+            overlayLevel: HeatMapOverlayLevel,
+            uiColors: [UIColor]
+        ) {
             if isComputing {
                 // Capture `self` weakly; re-read `mapView` at call time to avoid
                 // holding a stale reference if SwiftUI has recycled the UIView.
                 pendingUpdate = { [weak self] in
-                    self?.recompute(points: points, type: type, uiColors: uiColors)
+                    self?.recompute(
+                        points: points,
+                        type: type,
+                        overlayLevel: overlayLevel,
+                        uiColors: uiColors
+                    )
                 }
                 return
             }
@@ -140,7 +160,7 @@ public struct HeatMapView: UIViewRepresentable {
 
                 // Atomically swap old overlay for new one.
                 if let old = currentOverlay { mv.removeOverlay(old) }
-                mv.addOverlay(overlay, level: .aboveLabels)
+                mv.addOverlay(overlay, level: overlayLevel.mapKitValue)
                 currentOverlay  = overlay
                 currentRenderer = renderer
 
@@ -191,6 +211,7 @@ public struct HeatMapView: UIViewRepresentable {
             recompute(
                 points: lastPoints,
                 type: lastType ?? .radiusBlurry,
+                overlayLevel: lastOverlayLevel ?? .aboveLabels,
                 uiColors: lastColors.map { UIColor($0) }
             )
         }
